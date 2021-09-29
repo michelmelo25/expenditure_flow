@@ -6,7 +6,8 @@ class AppRoutes {
 
   static List<ModularRoute> setUp() {
     return [
-      ChildRoute(AppRoutes.main, child: (_, args) => HomePage()),
+      ChildRoute(AppRoutes.main,
+          child: (_, args) => HomePage(Modular.get(), user: args.data)),
     ];
   }
 }

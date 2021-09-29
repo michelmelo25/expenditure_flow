@@ -48,4 +48,9 @@ class AppStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.heading,
   );
+  static final captionShape = GoogleFonts.inter(
+    fontSize: 13,
+    fontWeight: FontWeight.w400,
+    color: AppColors.shape,
+  );
 }
