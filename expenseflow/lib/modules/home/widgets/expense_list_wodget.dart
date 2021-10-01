@@ -25,7 +25,7 @@ class _ExpenseListWodgetState extends State<ExpenseListWodget> {
                   child: RichText(
                       text: TextSpan(children: [
                 TextSpan(text: "${widget.expenses[index].name}\n"),
-                TextSpan(text: "${widget.expenses[index].cetegory ?? ''}"),
+                // TextSpan(text: "${widget.expenses[index].cetegory ?? ''}"),
               ]))),
               trailing: Checkbox(
                 value: widget.expenses[index].paid,

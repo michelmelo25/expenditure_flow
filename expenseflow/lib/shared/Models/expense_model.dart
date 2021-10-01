@@ -1,22 +1,22 @@
 import 'dart:convert';
 
-import 'package:expenseflow/shared/Models/category_model.dart';
+// import 'package:expenseflow/shared/Models/category_model.dart';
 
 class ExpenseModel {
-  int id;
+  int? id;
   String name;
-  String value;
+  double value;
   String dueDate;
   bool paid;
   // String userId;
-  CategoryModel? cetegory;
+  // CategoryModel? cetegory;
   ExpenseModel({
-    required this.id,
+    this.id,
     required this.name,
     required this.value,
     required this.dueDate,
     required this.paid,
-    this.cetegory,
+    // this.cetegory,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,7 +26,7 @@ class ExpenseModel {
       'value': value,
       'dueDate': dueDate,
       'paid': paid,
-      'cetegory': cetegory?.toMap(),
+      // 'cetegory': cetegory?.toMap(),
     };
   }
 
@@ -36,8 +36,8 @@ class ExpenseModel {
       name: map['name'],
       value: map['value'],
       dueDate: map['dueDate'],
-      paid: map['paid'],
-      cetegory: CategoryModel.fromMap(map['cetegory']),
+      paid: map['paid'] == 1 ? true : false,
+      // cetegory: CategoryModel.fromMap(map['cetegory']),
     );
   }
 
@@ -48,6 +48,6 @@ class ExpenseModel {
 
   @override
   String toString() {
-    return 'ExpenseModel(id: $id, name: $name, value: $value, dueDate: $dueDate, paid: $paid, cetegory: $cetegory)';
+    return 'ExpenseModel(id: $id, name: $name, value: $value, dueDate: $dueDate, paid: $paid)';
   }
 }

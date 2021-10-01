@@ -11,7 +11,7 @@ class AppStyles {
   static final titleRegular = GoogleFonts.lexendDeca(
     fontSize: 20,
     fontWeight: FontWeight.w400,
-    color: AppColors.background,
+    color: AppColors.stroke,
   );
   static final titleBoldHeading = GoogleFonts.lexendDeca(
     fontSize: 20,
@@ -21,7 +21,7 @@ class AppStyles {
   static final titleBoldBackground = GoogleFonts.lexendDeca(
     fontSize: 20,
     fontWeight: FontWeight.w600,
-    color: AppColors.background,
+    color: AppColors.stroke,
   );
   static final titleListTile = GoogleFonts.lexendDeca(
     fontSize: 17,

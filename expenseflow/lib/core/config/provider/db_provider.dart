@@ -30,7 +30,7 @@ class DBProvider {
           "name TEXT,"
           "value REAL,"
           "dueDate TEXT,"
-          "userId TEXT"
+          "paid INTEGER"
           ")");
 
       await db.execute("CREATE TABLE Category ("

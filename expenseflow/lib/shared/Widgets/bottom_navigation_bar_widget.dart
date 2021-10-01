@@ -24,7 +24,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5)),
               child: IconButton(
                 onPressed: () {
-                  Modular.to.pushNamed("/add", arguments: controller);
+                  Modular.to.pushNamed("/add");
                 },
                 icon: Icon(
                   Icons.add_box_outlined,

@@ -7,7 +7,7 @@ class AppColors {
 
   static final primary = Color(0XFF1C3DE3);
   static final secondary = Color(0xFFFF941A);
-  static final background = Color(0XFFC4C4C4);
+  static final background = Color(0XFFFFFFF);
   static final grey = Color(0xFF585666);
   static final delete = Color(0xFFE83F5B);
   static final heading = Color(0xFF585666);

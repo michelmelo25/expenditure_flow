@@ -1,11 +1,14 @@
 import 'package:expenseflow/core/config/consts/app_colors.dart';
 import 'package:expenseflow/core/config/consts/app_styles.dart';
-import 'package:expenseflow/modules/home/controller/home_controller.dart';
+import 'package:expenseflow/modules/insert_expense/controller/insert_expense_controller.dart';
+import 'package:expenseflow/modules/insert_expense/widgets/button_navigation_widget.dart';
+import 'package:expenseflow/shared/Models/expense_model.dart';
 import 'package:expenseflow/shared/Widgets/input_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class InsertExpensePage extends StatefulWidget {
-  final HomeController controller;
+  final InsertExpenseController controller;
   const InsertExpensePage(this.controller, {Key? key}) : super(key: key);
 
   @override
@@ -28,6 +31,20 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
         leading: BackButton(color: AppColors.input),
       ),
       body: buidBody(context),
+      bottomNavigationBar: ButtonNavigationWidget(
+        onPressedPrimary: () async {
+          await widget.controller.saveExpense(ExpenseModel(
+            name: nameController.text,
+            value: double.parse(valueController.text),
+            dueDate: dueDateController.text,
+            paid: paid,
+          ));
+          Modular.to.pop();
+        },
+        onPressedSecond: () {
+          Modular.to.pop();
+        },
+      ),
     );
   }
 
@@ -35,9 +52,9 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Text("Peencha os dados da despesa"),
+          Text("Peencha os dados da despesa", style: AppStyles.trailingRegular),
           SizedBox(
-            height: 24,
+            height: 30,
           ),
           Form(
             key: widget.controller.formKey,
@@ -52,12 +69,14 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
                 controller: dueDateController,
                 label: "Vencimento",
                 icon: Icons.calendar_today_outlined,
+                keyboardType: TextInputType.datetime,
                 onChanged: (value) {},
               ),
               InputTextWidget(
                 controller: valueController,
                 label: "Valor",
                 icon: Icons.attach_money_outlined,
+                keyboardType: TextInputType.number,
                 onChanged: (value) {},
               ),
               Row(
@@ -95,32 +114,11 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
                   ),
                 ],
               ),
-              // TextField(
-              //   style: AppStyles.input,
-              //   decoration: InputDecoration(
-              //       contentPadding: EdgeInsets.zero,
-              //       labelText: "Pago?",
-              //       labelStyle: AppStyles.input,
-              //       enabled: false,
-              //       icon: Row(
-              //         mainAxisSize: MainAxisSize.min,
-              //         children: [
-              //           Padding(
-              //             padding: const EdgeInsets.symmetric(horizontal: 18),
-              //             child: Icon(
-              //               Icons.payment_outlined,
-              //               color: AppColors.primary,
-              //             ),
-              //           ),
-              //           Container(
-              // width: 1,
-              // height: 48,
-              // color: AppColors.stroke,
-              //           )
-              //         ],
-              //       ),
-              //       border: InputBorder.none),
-              // )
+              Divider(
+                thickness: 1,
+                height: 1,
+                color: AppColors.stroke,
+              ),
             ]),
           )
         ],

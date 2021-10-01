@@ -2,14 +2,15 @@ import 'package:dartz/dartz.dart';
 import 'package:expenseflow/core/config/error/failures.dart';
 import 'package:expenseflow/modules/home/data/home_repository.dart';
 import 'package:expenseflow/shared/Models/expense_model.dart';
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
-class HomeController {
-  final HomeRepository repository;
-  HomeController(this.repository);
+part 'home_controller.g.dart';
 
-  final formKey = GlobalKey<FormState>();
+class HomeController = HomeControllerBase with _$HomeController;
+
+abstract class HomeControllerBase with Store {
+  final HomeRepository repository;
+  HomeControllerBase(this.repository);
 
   // @observable
   // UserModel? _user;

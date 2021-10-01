@@ -5,7 +5,6 @@ import 'package:expenseflow/modules/home/widgets/home_body_widget.dart';
 import 'package:expenseflow/shared/Models/user_model.dart';
 import 'package:expenseflow/shared/Widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatefulWidget {
   final HomeController controller;
@@ -17,6 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.initApp();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
