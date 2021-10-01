@@ -20,3 +20,9 @@ class ExpensesNotFoundFailure extends Failure {
   static ExpensesNotFoundFailure instance = ExpensesNotFoundFailure._();
   ExpensesNotFoundFailure._() : super(MESSAGE);
 }
+
+class ExpensesNotSaveFailure extends Failure {
+  static const String MESSAGE = "Não foi possivel salvar a despesa";
+  static ExpensesNotSaveFailure instance = ExpensesNotSaveFailure._();
+  ExpensesNotSaveFailure._() : super(MESSAGE);
+}

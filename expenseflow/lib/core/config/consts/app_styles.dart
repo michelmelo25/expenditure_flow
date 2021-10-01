@@ -53,4 +53,9 @@ class AppStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.shape,
   );
+  static final input = GoogleFonts.inter(
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
+    color: AppColors.input,
+  );
 }

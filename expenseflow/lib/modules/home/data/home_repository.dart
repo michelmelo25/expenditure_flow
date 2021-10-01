@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:expenseflow/core/app/connectivity_service.dart';
 import 'package:expenseflow/core/config/drivers/device_storage_driver.dart';
 import 'package:expenseflow/core/config/error/failures.dart';
+import 'package:expenseflow/core/config/provider/db_provider.dart';
 import 'package:expenseflow/shared/Models/expense_model.dart';
 
 class HomeRepository {
@@ -11,13 +12,66 @@ class HomeRepository {
     this.deviceStorageDriver,
   );
 
-  Future<Either<Failure, List<ExpenseModel>>> getAllExpenses(String key) async {
+  String expendeDB = "Expense";
+  String userDb = "User";
+  String categoreDB = "Category";
+  String categoreExpendeDB = "ExpenseCategore";
+
+  Future<Either<Failure, List<ExpenseModel>>> getAllExpenses() async {
     try {
-      final response = await deviceStorageDriver.get(key);
-      final jsonResult = response.data;
-      return Right([]);
+      final db = await DBProvider.db.database;
+      final response = await db.query(expendeDB);
+      final jsonResult = List<ExpenseModel>.from(response.isNotEmpty
+          ? response.map((e) => ExpenseModel.fromMap(e)).toList()
+          : []);
+      return Right(jsonResult);
     } catch (e) {
       return Left(ExpensesNotFoundFailure.instance);
+    }
+  }
+
+  Future<Either<Failure, ExpenseModel>> getExpense(int id) async {
+    try {
+      final db = await DBProvider.db.database;
+      final response = await db.query(expendeDB, where: "id=$id");
+      final jsonResult = ExpenseModel.fromMap(response[0]);
+      return Right(jsonResult);
+    } catch (e) {
+      return Left(ExpensesNotFoundFailure.instance);
+    }
+  }
+
+  Future<Either<Failure, bool>> dellExpense(int id) async {
+    try {
+      final db = await DBProvider.db.database;
+      final response = await db.delete(expendeDB, where: "id=$id");
+      if (response > 0) {
+        return Right(true);
+      }
+      return Left(ExpensesNotFoundFailure.instance);
+    } catch (e) {
+      return Left(ExpensesNotFoundFailure.instance);
+    }
+  }
+
+  Future<Either<Failure, int>> postExpense(ExpenseModel expense) async {
+    try {
+      final db = await DBProvider.db.database;
+      var response = await db.insert(expendeDB, expense.toMap());
+      return Right(response);
+    } catch (e) {
+      return Left(ExpensesNotSaveFailure.instance);
+    }
+  }
+
+  Future<Either<Failure, int>> putExpense(ExpenseModel expense) async {
+    try {
+      final db = await DBProvider.db.database;
+      var response = await db.update(expendeDB, expense.toMap(),
+          where: "id=?", whereArgs: [expense.id]);
+      return Right(response);
+    } catch (e) {
+      return Left(ExpensesNotSaveFailure.instance);
     }
   }
 }

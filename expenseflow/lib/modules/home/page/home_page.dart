@@ -5,6 +5,7 @@ import 'package:expenseflow/modules/home/widgets/home_body_widget.dart';
 import 'package:expenseflow/shared/Models/user_model.dart';
 import 'package:expenseflow/shared/Widgets/bottom_navigation_bar_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatefulWidget {
   final HomeController controller;
@@ -21,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: buildAppBar(),
       body: HomeBodyWidget(widget.controller),
-      bottomNavigationBar: BottomNavigationBarWidget(),
+      bottomNavigationBar: BottomNavigationBarWidget(widget.controller),
     );
   }
 }

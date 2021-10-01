@@ -3,19 +3,20 @@ import 'dart:convert';
 import 'package:expenseflow/shared/Models/category_model.dart';
 
 class ExpenseModel {
-  String id;
+  int id;
   String name;
   String value;
-  DateTime dueDate;
-  String userId;
-  List<CategoryModel>? cetegorys;
+  String dueDate;
+  bool paid;
+  // String userId;
+  CategoryModel? cetegory;
   ExpenseModel({
     required this.id,
     required this.name,
     required this.value,
     required this.dueDate,
-    required this.userId,
-    this.cetegorys,
+    required this.paid,
+    this.cetegory,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,9 +24,9 @@ class ExpenseModel {
       'id': id,
       'name': name,
       'value': value,
-      'dueDate': dueDate.millisecondsSinceEpoch,
-      'userId': userId,
-      'cetegorys': cetegorys?.map((x) => x.toMap()).toList() ?? [],
+      'dueDate': dueDate,
+      'paid': paid,
+      'cetegory': cetegory?.toMap(),
     };
   }
 
@@ -34,10 +35,9 @@ class ExpenseModel {
       id: map['id'],
       name: map['name'],
       value: map['value'],
-      dueDate: DateTime.fromMillisecondsSinceEpoch(map['dueDate']),
-      userId: map['userId'],
-      cetegorys: List<CategoryModel>.from(
-          map['cetegorys']?.map((x) => CategoryModel.fromMap(x))),
+      dueDate: map['dueDate'],
+      paid: map['paid'],
+      cetegory: CategoryModel.fromMap(map['cetegory']),
     );
   }
 
@@ -48,6 +48,6 @@ class ExpenseModel {
 
   @override
   String toString() {
-    return 'ExpenseModel(id: $id, name: $name, value: $value, dueDate: $dueDate, userId: $userId, cetegorys: $cetegorys)';
+    return 'ExpenseModel(id: $id, name: $name, value: $value, dueDate: $dueDate, paid: $paid, cetegory: $cetegory)';
   }
 }
