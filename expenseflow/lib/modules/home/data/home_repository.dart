@@ -67,8 +67,10 @@ class HomeRepository {
   Future<Either<Failure, int>> putExpense(ExpenseModel expense) async {
     try {
       final db = await DBProvider.db.database;
-      var response = await db.update(expendeDB, expense.toMap(),
-          where: "id=?", whereArgs: [expense.id]);
+      var request = expense.toMap();
+      request['paid'] = request['paid'] == true ? 1 : 0;
+      var response = await db
+          .update(expendeDB, request, where: "id=?", whereArgs: [expense.id]);
       return Right(response);
     } catch (e) {
       return Left(ExpensesNotSaveFailure.instance);

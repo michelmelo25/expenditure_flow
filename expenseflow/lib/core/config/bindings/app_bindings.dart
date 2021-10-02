@@ -28,7 +28,7 @@ class AppBindigs {
   static bindStores() {
     return [
       Bind((i) => HomeController(i.get<HomeRepository>())),
-      Bind((i) => InsertExpenseController(i.get<InsertRepository>()))
+      Bind((i) => InsertExpenseController(i.get<InsertRepository>())),
     ];
   }
 }

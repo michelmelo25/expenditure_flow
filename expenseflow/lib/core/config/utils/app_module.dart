@@ -7,5 +7,5 @@ class AppModule extends Module {
   final List<Bind> binds = [...AppBindigs.setUp()];
 
   @override
-  final List<ModularRoute> routes = AppRoutes.setUp();
+  final List<ModularRoute> routes = [...AppRoutes.setUp()];
 }

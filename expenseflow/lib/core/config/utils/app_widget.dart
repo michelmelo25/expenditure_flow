@@ -1,5 +1,6 @@
 import 'package:expenseflow/core/config/consts/app_strings.dart';
 import 'package:expenseflow/core/config/routes/app_routs.dart';
+import 'package:expenseflow/modules/home/page/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -12,6 +13,7 @@ class AppWidget extends StatelessWidget {
       title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.main,
+      home: HomePage(Modular.get()),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

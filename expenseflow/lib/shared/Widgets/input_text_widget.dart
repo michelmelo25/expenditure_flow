@@ -10,7 +10,10 @@ class InputTextWidget extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final void Function(String value) onChanged;
-
+  final Function()? onTap;
+  final bool? enable;
+  final bool readOnly;
+  final Widget? suffixIcon;
   const InputTextWidget(
       {Key? key,
       required this.label,
@@ -19,7 +22,11 @@ class InputTextWidget extends StatelessWidget {
       this.validator,
       this.controller,
       required this.onChanged,
-      this.keyboardType})
+      this.onTap,
+      this.keyboardType,
+      this.enable,
+      this.suffixIcon,
+      this.readOnly = false})
       : super(key: key);
 
   @override
@@ -35,10 +42,14 @@ class InputTextWidget extends StatelessWidget {
             validator: validator,
             keyboardType: keyboardType,
             style: AppStyles.input,
+            onTap: onTap,
+            enabled: enable,
+            readOnly: readOnly,
             decoration: InputDecoration(
                 contentPadding: EdgeInsets.zero,
                 labelText: label,
                 labelStyle: AppStyles.input,
+                suffixIcon: suffixIcon,
                 icon: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [

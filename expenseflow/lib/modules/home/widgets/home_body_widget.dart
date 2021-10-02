@@ -36,21 +36,36 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
                   children: [
                     Card(
                       child: ListTile(
-                        leading: RichText(
-                            text: TextSpan(
-                                style: AppStyles.input,
-                                text: "${expenses[index].name}\n",
-                                children: [
-                              TextSpan(text: "${expenses[index].dueDate}")
-                            ])),
-                        title: Text(
-                          "R\$: ${expenses[index].value}",
-                          style: AppStyles.input,
-                          textAlign: TextAlign.end,
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${expenses[index].name}",
+                              style: AppStyles.titleListTile,
+                            ),
+                            Text(
+                              "R\$: ${expenses[index].value}",
+                              style: AppStyles.trailingBold,
+                            ),
+                          ],
+                        ),
+                        subtitle: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("${expenses[index].category}",
+                                style: AppStyles.captionBody),
+                            Text("${expenses[index].dueDate}",
+                                style: AppStyles.captionBody),
+                          ],
                         ),
                         trailing: Checkbox(
                           value: expenses[index].paid,
-                          onChanged: (status) {},
+                          onChanged: (status) {
+                            setState(() {
+                              expenses[index].paid = status!;
+                            });
+                            widget.controller.updateExpense(expenses[index]);
+                          },
                         ),
                       ),
                     )

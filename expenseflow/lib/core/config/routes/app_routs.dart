@@ -11,7 +11,7 @@ class AppRoutes {
       ChildRoute(AppRoutes.main,
           child: (_, args) => HomePage(Modular.get(), user: args.data)),
       ChildRoute(AppRoutes.add,
-          child: (_, args) => InsertExpensePage(Modular.get()))
+          child: (_, args) => InsertExpensePage(Modular.get())),
     ];
   }
 }
