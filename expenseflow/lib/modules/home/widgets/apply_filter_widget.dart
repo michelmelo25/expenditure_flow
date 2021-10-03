@@ -2,6 +2,7 @@ import 'package:expenseflow/core/config/consts/app_colors.dart';
 import 'package:expenseflow/core/config/consts/app_styles.dart';
 import 'package:expenseflow/modules/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class ApplyFilterWidget extends StatefulWidget {
   final HomeController controller;
@@ -67,11 +68,20 @@ class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
                         Expanded(
                           child: TextField(
                             controller: dataController,
+                            inputFormatters: [
+                              MaskTextInputFormatter(
+                                  mask: "##/####",
+                                  filter: {"#": RegExp(r'[0-9]')})
+                            ],
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               labelText: "Data",
                               labelStyle: AppStyles.input,
                             ),
-                            onChanged: (text) {},
+                            onSubmitted: (text) {
+                              dataController.text = text;
+                              widget.controller.dateSelected = text;
+                            },
                           ),
                         ),
                       ],

@@ -41,14 +41,22 @@ abstract class HomeControllerBase with Store {
   void set nameSelected(String text) => _nameSelected = text;
 
   @computed
+  String get dateSelected => _dateSelected;
+
+  @computed
+  void set dateSelected(String text) => _dateSelected = text;
+
+  @computed
   List<CategoryModel> get categorys => _categorys;
 
   @computed
   Either<Failure, List<ExpenseModel>> get expenses => (_expenses == null)
       ? Left(ExpensesNotFoundFailure.instance)
       : (_categorySelected == "-")
-          ? (nameSelected == "")
-              ? Right(_expenses!)
+          ? (_nameSelected == "")
+              ? (_dateSelected == "")
+                  ? Right(_expenses!)
+                  : Right(filterByMonth())
               : Right(filterByName())
           : Right(filterByCategory());
 
@@ -59,8 +67,12 @@ abstract class HomeControllerBase with Store {
   }
 
   List<ExpenseModel> filterByCategory() {
+    return [];
+  }
+
+  List<ExpenseModel> filterByMonth() {
     return List.from(
-        _expenses!.where((element) => element.category! == _categorySelected));
+        _expenses!.where((element) => element.dueDate.contains(_dateSelected)));
   }
 
   @action
