@@ -16,6 +16,13 @@ mixin _$HomeController on HomeControllerBase, Store {
           Computed<String>(() => super.catcategorySelected,
               name: 'HomeControllerBase.catcategorySelected'))
       .value;
+  Computed<String>? _$nameSelectedComputed;
+
+  @override
+  String get nameSelected =>
+      (_$nameSelectedComputed ??= Computed<String>(() => super.nameSelected,
+              name: 'HomeControllerBase.nameSelected'))
+          .value;
   Computed<List<CategoryModel>>? _$categorysComputed;
 
   @override
@@ -77,6 +84,36 @@ mixin _$HomeController on HomeControllerBase, Store {
     });
   }
 
+  final _$_dateSelectedAtom = Atom(name: 'HomeControllerBase._dateSelected');
+
+  @override
+  String get _dateSelected {
+    _$_dateSelectedAtom.reportRead();
+    return super._dateSelected;
+  }
+
+  @override
+  set _dateSelected(String value) {
+    _$_dateSelectedAtom.reportWrite(value, super._dateSelected, () {
+      super._dateSelected = value;
+    });
+  }
+
+  final _$_nameSelectedAtom = Atom(name: 'HomeControllerBase._nameSelected');
+
+  @override
+  String get _nameSelected {
+    _$_nameSelectedAtom.reportRead();
+    return super._nameSelected;
+  }
+
+  @override
+  set _nameSelected(String value) {
+    _$_nameSelectedAtom.reportWrite(value, super._nameSelected, () {
+      super._nameSelected = value;
+    });
+  }
+
   final _$initAppAsyncAction = AsyncAction('HomeControllerBase.initApp');
 
   @override
@@ -112,6 +149,7 @@ mixin _$HomeController on HomeControllerBase, Store {
   String toString() {
     return '''
 catcategorySelected: ${catcategorySelected},
+nameSelected: ${nameSelected},
 categorys: ${categorys},
 expenses: ${expenses}
     ''';

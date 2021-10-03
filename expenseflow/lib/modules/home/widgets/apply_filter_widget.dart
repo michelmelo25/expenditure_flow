@@ -12,6 +12,9 @@ class ApplyFilterWidget extends StatefulWidget {
 }
 
 class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
+  final TextEditingController dataController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     // final devideInfo = MediaQuery.of(context);
@@ -34,7 +37,7 @@ class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 24),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -58,31 +61,37 @@ class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
                       ],
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Column(
-                          children: [
-                            Container(
-                              width: 150,
-                              child: TextField(
-                                  decoration: InputDecoration(
-                                labelText: "Data",
-                                labelStyle: AppStyles.input,
-                              )),
+                        Expanded(
+                          child: TextField(
+                            controller: dataController,
+                            decoration: InputDecoration(
+                              labelText: "Data",
+                              labelStyle: AppStyles.input,
                             ),
-                            Container(
-                              width: 150,
-                              child: TextField(
-                                  decoration: InputDecoration(
-                                labelText: "Nome",
-                                labelStyle: AppStyles.input,
-                              )),
-                            ),
-                          ],
+                            onChanged: (text) {},
+                          ),
                         ),
-                        ElevatedButton(
-                            onPressed: () {}, child: Text("Filtrar")),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              labelText: "Nome",
+                              labelStyle: AppStyles.input,
+                            ),
+                            onSubmitted: (text) {
+                              widget.controller.nameSelected =
+                                  nameController.text;
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ],

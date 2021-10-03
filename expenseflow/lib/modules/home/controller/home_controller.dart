@@ -22,11 +22,23 @@ abstract class HomeControllerBase with Store {
   @observable
   String _categorySelected = "-";
 
+  @observable
+  String _dateSelected = "-";
+
+  @observable
+  String _nameSelected = "";
+
   @computed
   String get catcategorySelected => _categorySelected;
 
   @computed
   void set catcategorySelected(String text) => _categorySelected = text;
+
+  @computed
+  String get nameSelected => _nameSelected;
+
+  @computed
+  void set nameSelected(String text) => _nameSelected = text;
 
   @computed
   List<CategoryModel> get categorys => _categorys;
@@ -35,9 +47,21 @@ abstract class HomeControllerBase with Store {
   Either<Failure, List<ExpenseModel>> get expenses => (_expenses == null)
       ? Left(ExpensesNotFoundFailure.instance)
       : (_categorySelected == "-")
-          ? Right(_expenses!)
-          : Right(List.from(_expenses!
-              .where((element) => element.category! == _categorySelected)));
+          ? (nameSelected == "")
+              ? Right(_expenses!)
+              : Right(filterByName())
+          : Right(filterByCategory());
+
+  List<ExpenseModel> filterByName() {
+    return List.from(_expenses!.where((element) =>
+        element.name == nameSelected ||
+        element.name.toLowerCase() == nameSelected.toLowerCase()));
+  }
+
+  List<ExpenseModel> filterByCategory() {
+    return List.from(
+        _expenses!.where((element) => element.category! == _categorySelected));
+  }
 
   @action
   Future<void> initApp() async {
