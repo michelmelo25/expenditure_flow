@@ -1,4 +1,5 @@
 import 'package:expenseflow/core/config/consts/app_colors.dart';
+import 'package:expenseflow/core/config/consts/app_styles.dart';
 import 'package:expenseflow/modules/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
       children: [
         Container(
           width: double.maxFinite,
-          height: 50,
+          height: 115,
           color: AppColors.primary,
           alignment: Alignment.topCenter,
         ),
@@ -38,7 +39,6 @@ class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text("Categoria"),
                         DropdownButton<String>(
                           items: widget.controller.categorys.map((cat) {
                             return DropdownMenuItem<String>(
@@ -54,6 +54,35 @@ class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
                           },
                           value: widget.controller.catcategorySelected,
                         ),
+                        Text("Categoria"),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              width: 150,
+                              child: TextField(
+                                  decoration: InputDecoration(
+                                labelText: "Data",
+                                labelStyle: AppStyles.input,
+                              )),
+                            ),
+                            Container(
+                              width: 150,
+                              child: TextField(
+                                  decoration: InputDecoration(
+                                labelText: "Nome",
+                                labelStyle: AppStyles.input,
+                              )),
+                            ),
+                          ],
+                        ),
+                        ElevatedButton(
+                            onPressed: () {}, child: Text("Filtrar")),
                       ],
                     ),
                   ],

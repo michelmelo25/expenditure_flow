@@ -36,7 +36,7 @@ PreferredSize buildAppBar() {
   return PreferredSize(
     preferredSize: Size.fromHeight(125),
     child: Container(
-      height: 152,
+      height: 100,
       color: AppColors.primary,
       child: Center(
         child: ListTile(

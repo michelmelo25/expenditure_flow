@@ -40,61 +40,67 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
 
   Widget builBody(BuildContext context, List<ExpenseModel> expenses) =>
       Container(
-        child: ListView.builder(
-            itemCount: expenses.length,
-            itemBuilder: (_, index) {
-              return Column(
-                children: [
-                  ApplyFilterWidget(widget.controller),
-                  Card(
-                    child: ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "${expenses[index].name}",
-                            style: AppStyles.titleListTile,
+        child: Column(
+          children: [
+            ApplyFilterWidget(widget.controller),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: expenses.length,
+                  itemBuilder: (_, index) {
+                    return Column(
+                      children: [
+                        Card(
+                          child: ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${expenses[index].name}",
+                                  style: AppStyles.titleListTile,
+                                ),
+                                Text(
+                                  "R\$: ${expenses[index].value}",
+                                  style: AppStyles.trailingBold,
+                                ),
+                              ],
+                            ),
+                            subtitle: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("${expenses[index].category}",
+                                    style: AppStyles.captionBody),
+                                Text("${expenses[index].dueDate}",
+                                    style: AppStyles.captionBody),
+                              ],
+                            ),
+                            trailing: Checkbox(
+                              value: expenses[index].paid,
+                              onChanged: (status) async {
+                                setState(() {
+                                  expenses[index].paid = status!;
+                                });
+                                await widget.controller
+                                    .updateExpense(expenses[index]);
+                              },
+                            ),
+                            onLongPress: () {
+                              _showRemoveTaskDialog(expenses[index]);
+                            },
+                            onTap: () async {
+                              final add = await Modular.to.pushNamed("/add",
+                                  arguments: expenses[index]);
+                              if (add == true) {
+                                await widget.controller.initApp();
+                              }
+                            },
                           ),
-                          Text(
-                            "R\$: ${expenses[index].value}",
-                            style: AppStyles.trailingBold,
-                          ),
-                        ],
-                      ),
-                      subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("${expenses[index].category}",
-                              style: AppStyles.captionBody),
-                          Text("${expenses[index].dueDate}",
-                              style: AppStyles.captionBody),
-                        ],
-                      ),
-                      trailing: Checkbox(
-                        value: expenses[index].paid,
-                        onChanged: (status) async {
-                          setState(() {
-                            expenses[index].paid = status!;
-                          });
-                          await widget.controller
-                              .updateExpense(expenses[index]);
-                        },
-                      ),
-                      onLongPress: () {
-                        _showRemoveTaskDialog(expenses[index]);
-                      },
-                      onTap: () async {
-                        final add = await Modular.to
-                            .pushNamed("/add", arguments: expenses[index]);
-                        if (add == true) {
-                          await widget.controller.initApp();
-                        }
-                      },
-                    ),
-                  )
-                ],
-              );
-            }),
+                        )
+                      ],
+                    );
+                  }),
+            ),
+          ],
+        ),
       );
 
   _showRemoveTaskDialog(ExpenseModel expense) {
