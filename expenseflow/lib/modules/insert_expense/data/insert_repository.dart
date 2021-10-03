@@ -27,7 +27,20 @@ class InsertRepository {
       return Right(List.from(
           response.map((category) => CategoryModel.fromMap(category))));
     } catch (e) {
-      return Left(ExpensesNotSaveFailure.instance);
+      return Left(ExpensesNotFoundFailure.instance);
+    }
+  }
+
+  Future<Either<Failure, int>> postCategory(CategoryModel category) async {
+    try {
+      final db = await DBProvider.db.database;
+      var response = await db.insert(categoreDB, category.toMap());
+      if (response >= 1) {
+        return Right(response);
+      }
+      return Left(CategoryNotSaveFailure.instance);
+    } catch (e) {
+      return Left(CategoryNotSaveFailure.instance);
     }
   }
 }

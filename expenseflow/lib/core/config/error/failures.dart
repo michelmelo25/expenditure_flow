@@ -26,3 +26,9 @@ class ExpensesNotSaveFailure extends Failure {
   static ExpensesNotSaveFailure instance = ExpensesNotSaveFailure._();
   ExpensesNotSaveFailure._() : super(MESSAGE);
 }
+
+class CategoryNotSaveFailure extends Failure {
+  static const String MESSAGE = "Não foi possivel salvar a categoria";
+  static CategoryNotSaveFailure instance = CategoryNotSaveFailure._();
+  CategoryNotSaveFailure._() : super(MESSAGE);
+}

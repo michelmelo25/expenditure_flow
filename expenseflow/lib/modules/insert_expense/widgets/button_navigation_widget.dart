@@ -1,4 +1,5 @@
 import 'package:expenseflow/core/config/consts/app_colors.dart';
+import 'package:expenseflow/core/config/consts/app_strings.dart';
 import 'package:expenseflow/core/config/consts/app_styles.dart';
 import 'package:expenseflow/shared/Widgets/button_widget.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _ButtonNavigationWidgetState extends State<ButtonNavigationWidget> {
               children: [
                 Expanded(
                     child: ButtonWodget(
-                  label: "Cancelar",
+                  label: AppStrings.cancelar,
                   onPressed: widget.onPressedSecond,
                 )),
                 Container(
@@ -46,7 +47,7 @@ class _ButtonNavigationWidgetState extends State<ButtonNavigationWidget> {
                 ),
                 Expanded(
                     child: ButtonWodget(
-                  label: "Salvar",
+                  label: AppStrings.salvar,
                   style: AppStyles.buttonPrimary,
                   onPressed: widget.onPressedPrimary,
                 )),

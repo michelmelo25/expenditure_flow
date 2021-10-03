@@ -1,4 +1,5 @@
 import 'package:expenseflow/core/config/consts/app_colors.dart';
+import 'package:expenseflow/core/config/consts/app_strings.dart';
 import 'package:expenseflow/modules/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -15,7 +16,10 @@ class BottomNavigationBarWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.home)),
+          IconButton(
+              tooltip: AppStrings.home,
+              onPressed: () {},
+              icon: Icon(Icons.home)),
           Container(
               width: 56,
               height: 56,
@@ -23,8 +27,12 @@ class BottomNavigationBarWidget extends StatelessWidget {
                   color: AppColors.primary,
                   borderRadius: BorderRadius.circular(5)),
               child: IconButton(
-                onPressed: () {
-                  Modular.to.pushNamed("/add");
+                tooltip: AppStrings.addNovaDespesa,
+                onPressed: () async {
+                  final add = await Modular.to.pushNamed("/add");
+                  if (add == true) {
+                    await controller.initApp();
+                  }
                 },
                 icon: Icon(
                   Icons.add_box_outlined,

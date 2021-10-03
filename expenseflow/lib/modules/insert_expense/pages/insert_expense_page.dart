@@ -1,7 +1,9 @@
 import 'package:expenseflow/core/config/consts/app_colors.dart';
+import 'package:expenseflow/core/config/consts/app_strings.dart';
 import 'package:expenseflow/core/config/consts/app_styles.dart';
 import 'package:expenseflow/modules/insert_expense/controller/insert_expense_controller.dart';
 import 'package:expenseflow/modules/insert_expense/widgets/button_navigation_widget.dart';
+import 'package:expenseflow/shared/Models/category_model.dart';
 import 'package:expenseflow/shared/Models/expense_model.dart';
 import 'package:expenseflow/shared/Widgets/input_text_widget.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,7 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
   final TextEditingController valueController = TextEditingController();
   final TextEditingController dueDateController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
+  final TextEditingController newCategoryController = TextEditingController();
 
   bool paid = false;
 
@@ -51,10 +54,10 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
             category: categoryController.text,
             paid: paid,
           ));
-          Modular.to.pop();
+          Modular.to.pop(true);
         },
         onPressedSecond: () {
-          Modular.to.pop();
+          Modular.to.pop(false);
         },
       ),
     );
@@ -156,6 +159,7 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
     );
   }
 
+  // -------------------------------no----------------------------
   Widget categoryList(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
@@ -194,7 +198,12 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
                                   value: categorySelected == index,
                                   onChanged: (status) {
                                     setState(() {
-                                      categorySelected = index;
+                                      if (status!) {
+                                        categorySelected = index;
+                                      } else {
+                                        categorySelected = -1;
+                                        categoryController.clear();
+                                      }
                                     });
                                   }),
                               title:
@@ -210,7 +219,7 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
                       children: [
                         Expanded(
                             child: TextField(
-                          controller: categoryController,
+                          controller: newCategoryController,
                           decoration: InputDecoration(
                             labelText: "Nova Categoria",
                             labelStyle: AppStyles.input,
@@ -246,12 +255,26 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 18),
                               child: IconButton(
-                                onPressed: () {
+                                tooltip: AppStrings.addNovaCategoria,
+                                onPressed: () async {
                                   setState(() {
                                     visible = false;
-                                    categoryController.text = widget.controller
-                                        .categorys[categorySelected].name;
+                                    categoryController.text =
+                                        newCategoryController.text;
+                                    if (categorySelected != -1) {
+                                      categoryController.text = widget
+                                          .controller
+                                          .categorys[categorySelected]
+                                          .name;
+                                    }
                                   });
+                                  if (newCategoryController.text.isNotEmpty) {
+                                    categoryController.text =
+                                        newCategoryController.text;
+                                    await widget.controller.addCategory(
+                                        CategoryModel(
+                                            name: newCategoryController.text));
+                                  }
                                 },
                                 icon: Icon(
                                   Icons.add,

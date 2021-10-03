@@ -29,9 +29,9 @@ class _ExpenseListWodgetState extends State<ExpenseListWodget> {
               ]))),
               trailing: Checkbox(
                 value: widget.expenses[index].paid,
-                onChanged: (status) {
+                onChanged: (status) async {
                   widget.expenses[index].paid = status!;
-                  widget.controller.updateExpense(widget.expenses[index]);
+                  await widget.controller.updateExpense(widget.expenses[index]);
                 },
               ),
             ));

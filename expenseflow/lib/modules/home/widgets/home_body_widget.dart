@@ -60,11 +60,12 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
                         ),
                         trailing: Checkbox(
                           value: expenses[index].paid,
-                          onChanged: (status) {
+                          onChanged: (status) async {
                             setState(() {
                               expenses[index].paid = status!;
                             });
-                            widget.controller.updateExpense(expenses[index]);
+                            await widget.controller
+                                .updateExpense(expenses[index]);
                           },
                         ),
                       ),

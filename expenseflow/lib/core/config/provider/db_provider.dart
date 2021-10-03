@@ -14,7 +14,7 @@ class DBProvider {
 
     // if _database is null we instantiate it
     _database = await initDB();
-    await initCategory();
+
     return _database!;
   }
 
@@ -48,13 +48,15 @@ class DBProvider {
           "expenseId INTEGER,"
           "categoryId INTEGER"
           ")");
+
+      await initCategory(db);
     });
   }
 
-  initCategory() async {
+  initCategory(Database db) async {
     initialsCategoty = List.from(init().map((e) => CategoryModel.fromMap(e)));
     initialsCategoty!.forEach((element) {
-      _database!.insert("Category", element.toMap());
+      db.insert("Category", element.toMap());
     });
   }
 

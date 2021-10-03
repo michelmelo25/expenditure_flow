@@ -35,4 +35,15 @@ abstract class InsertExpenseControllerBase with Store {
       repository.postExpense(expense);
     } catch (e) {}
   }
+
+  @action
+  Future<void> addCategory(CategoryModel category) async {
+    try {
+      final response = await repository.postCategory(category);
+      response.fold((l) => null, (r) {
+        category.id = r;
+        _catregorys.add(category);
+      });
+    } catch (e) {}
+  }
 }
