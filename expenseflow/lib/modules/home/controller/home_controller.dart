@@ -23,7 +23,7 @@ abstract class HomeControllerBase with Store {
   String _categorySelected = "-";
 
   @observable
-  String _dateSelected = "-";
+  String _dateSelected = "";
 
   @observable
   String _nameSelected = "";

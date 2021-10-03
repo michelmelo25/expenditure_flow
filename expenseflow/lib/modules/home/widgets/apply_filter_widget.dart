@@ -17,6 +17,13 @@ class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
   final TextEditingController nameController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    dataController.text = widget.controller.dateSelected;
+    nameController.text = widget.controller.nameSelected;
+  }
+
+  @override
   Widget build(BuildContext context) {
     // final devideInfo = MediaQuery.of(context);
     return Stack(
@@ -38,7 +45,7 @@ class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 24),
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -62,7 +69,7 @@ class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
                       ],
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
@@ -73,7 +80,7 @@ class _ApplyFilterWidgetState extends State<ApplyFilterWidget> {
                                   mask: "##/####",
                                   filter: {"#": RegExp(r'[0-9]')})
                             ],
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.datetime,
                             decoration: InputDecoration(
                               labelText: "Data",
                               labelStyle: AppStyles.input,
