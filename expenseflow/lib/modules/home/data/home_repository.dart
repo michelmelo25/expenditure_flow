@@ -3,6 +3,7 @@ import 'package:expenseflow/core/app/connectivity_service.dart';
 import 'package:expenseflow/core/config/drivers/device_storage_driver.dart';
 import 'package:expenseflow/core/config/error/failures.dart';
 import 'package:expenseflow/core/config/provider/db_provider.dart';
+import 'package:expenseflow/shared/Models/category_model.dart';
 import 'package:expenseflow/shared/Models/expense_model.dart';
 
 class HomeRepository {
@@ -74,6 +75,17 @@ class HomeRepository {
       return Right(response);
     } catch (e) {
       return Left(ExpensesNotSaveFailure.instance);
+    }
+  }
+
+  Future<Either<Failure, List<CategoryModel>>> getAllCategorys() async {
+    try {
+      final db = await DBProvider.db.database;
+      var response = await db.query(categoreDB);
+      return Right(List.from(
+          response.map((category) => CategoryModel.fromMap(category))));
+    } catch (e) {
+      return Left(ExpensesNotFoundFailure.instance);
     }
   }
 }

@@ -9,6 +9,20 @@ part of 'home_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on HomeControllerBase, Store {
+  Computed<String>? _$catcategorySelectedComputed;
+
+  @override
+  String get catcategorySelected => (_$catcategorySelectedComputed ??=
+          Computed<String>(() => super.catcategorySelected,
+              name: 'HomeControllerBase.catcategorySelected'))
+      .value;
+  Computed<List<CategoryModel>>? _$categorysComputed;
+
+  @override
+  List<CategoryModel> get categorys => (_$categorysComputed ??=
+          Computed<List<CategoryModel>>(() => super.categorys,
+              name: 'HomeControllerBase.categorys'))
+      .value;
   Computed<Either<Failure, List<ExpenseModel>>>? _$expensesComputed;
 
   @override
@@ -29,6 +43,37 @@ mixin _$HomeController on HomeControllerBase, Store {
   set _expenses(ObservableList<ExpenseModel>? value) {
     _$_expensesAtom.reportWrite(value, super._expenses, () {
       super._expenses = value;
+    });
+  }
+
+  final _$_categorysAtom = Atom(name: 'HomeControllerBase._categorys');
+
+  @override
+  List<CategoryModel> get _categorys {
+    _$_categorysAtom.reportRead();
+    return super._categorys;
+  }
+
+  @override
+  set _categorys(List<CategoryModel> value) {
+    _$_categorysAtom.reportWrite(value, super._categorys, () {
+      super._categorys = value;
+    });
+  }
+
+  final _$_categorySelectedAtom =
+      Atom(name: 'HomeControllerBase._categorySelected');
+
+  @override
+  String get _categorySelected {
+    _$_categorySelectedAtom.reportRead();
+    return super._categorySelected;
+  }
+
+  @override
+  set _categorySelected(String value) {
+    _$_categorySelectedAtom.reportWrite(value, super._categorySelected, () {
+      super._categorySelected = value;
     });
   }
 
@@ -55,9 +100,19 @@ mixin _$HomeController on HomeControllerBase, Store {
     return _$updateExpenseAsyncAction.run(() => super.updateExpense(expense));
   }
 
+  final _$initCategorysAsyncAction =
+      AsyncAction('HomeControllerBase.initCategorys');
+
+  @override
+  Future<void> initCategorys() {
+    return _$initCategorysAsyncAction.run(() => super.initCategorys());
+  }
+
   @override
   String toString() {
     return '''
+catcategorySelected: ${catcategorySelected},
+categorys: ${categorys},
 expenses: ${expenses}
     ''';
   }
