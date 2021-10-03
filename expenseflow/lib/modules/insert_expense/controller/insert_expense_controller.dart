@@ -16,12 +16,19 @@ abstract class InsertExpenseControllerBase with Store {
   @observable
   List<CategoryModel> _catregorys = [];
 
+  @observable
+  ExpenseModel? _expenseSelected;
+
   @computed
   List<CategoryModel> get categorys => _catregorys;
 
+  @computed
+  ExpenseModel? get expense => _expenseSelected!;
+
   @action
-  Future<void> initCategorys() async {
+  Future<void> initCategorys(ExpenseModel? expense) async {
     try {
+      _expenseSelected = expense;
       final response = await repository.getAllCategorys();
       _catregorys.clear();
       response.fold(
@@ -44,6 +51,14 @@ abstract class InsertExpenseControllerBase with Store {
         category.id = r;
         _catregorys.add(category);
       });
+    } catch (e) {}
+  }
+
+  @action
+  Future<void> editExpense(ExpenseModel expense) async {
+    try {
+      final response = await repository.putExpense(expense);
+      response.fold((l) => null, (r) => null);
     } catch (e) {}
   }
 }

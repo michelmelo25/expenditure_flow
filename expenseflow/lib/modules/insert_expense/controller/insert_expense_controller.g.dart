@@ -16,6 +16,13 @@ mixin _$InsertExpenseController on InsertExpenseControllerBase, Store {
           Computed<List<CategoryModel>>(() => super.categorys,
               name: 'InsertExpenseControllerBase.categorys'))
       .value;
+  Computed<ExpenseModel?>? _$expenseComputed;
+
+  @override
+  ExpenseModel? get expense =>
+      (_$expenseComputed ??= Computed<ExpenseModel?>(() => super.expense,
+              name: 'InsertExpenseControllerBase.expense'))
+          .value;
 
   final _$_catregorysAtom =
       Atom(name: 'InsertExpenseControllerBase._catregorys');
@@ -33,12 +40,28 @@ mixin _$InsertExpenseController on InsertExpenseControllerBase, Store {
     });
   }
 
+  final _$_expenseSelectedAtom =
+      Atom(name: 'InsertExpenseControllerBase._expenseSelected');
+
+  @override
+  ExpenseModel? get _expenseSelected {
+    _$_expenseSelectedAtom.reportRead();
+    return super._expenseSelected;
+  }
+
+  @override
+  set _expenseSelected(ExpenseModel? value) {
+    _$_expenseSelectedAtom.reportWrite(value, super._expenseSelected, () {
+      super._expenseSelected = value;
+    });
+  }
+
   final _$initCategorysAsyncAction =
       AsyncAction('InsertExpenseControllerBase.initCategorys');
 
   @override
-  Future<void> initCategorys() {
-    return _$initCategorysAsyncAction.run(() => super.initCategorys());
+  Future<void> initCategorys(ExpenseModel? expense) {
+    return _$initCategorysAsyncAction.run(() => super.initCategorys(expense));
   }
 
   final _$saveExpenseAsyncAction =
@@ -49,10 +72,27 @@ mixin _$InsertExpenseController on InsertExpenseControllerBase, Store {
     return _$saveExpenseAsyncAction.run(() => super.saveExpense(expense));
   }
 
+  final _$addCategoryAsyncAction =
+      AsyncAction('InsertExpenseControllerBase.addCategory');
+
+  @override
+  Future<void> addCategory(CategoryModel category) {
+    return _$addCategoryAsyncAction.run(() => super.addCategory(category));
+  }
+
+  final _$editExpenseAsyncAction =
+      AsyncAction('InsertExpenseControllerBase.editExpense');
+
+  @override
+  Future<void> editExpense(ExpenseModel expense) {
+    return _$editExpenseAsyncAction.run(() => super.editExpense(expense));
+  }
+
   @override
   String toString() {
     return '''
-categorys: ${categorys}
+categorys: ${categorys},
+expense: ${expense}
     ''';
   }
 }

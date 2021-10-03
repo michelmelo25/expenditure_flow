@@ -11,7 +11,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class InsertExpensePage extends StatefulWidget {
   final InsertExpenseController controller;
-  const InsertExpensePage(this.controller, {Key? key}) : super(key: key);
+  final ExpenseModel? expense;
+  const InsertExpensePage(this.controller, {this.expense, Key? key})
+      : super(key: key);
 
   @override
   _InsertExpensePageState createState() => _InsertExpensePageState();
@@ -33,7 +35,14 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
   @override
   void initState() {
     super.initState();
-    widget.controller.initCategorys();
+    widget.controller.initCategorys(widget.expense);
+    if (widget.expense != null) {
+      nameController.text = widget.expense!.name;
+      valueController.text = widget.expense!.value.toString();
+      dueDateController.text = widget.expense!.dueDate;
+      categoryController.text = widget.expense?.category ?? '';
+      paid = widget.expense!.paid;
+    }
   }
 
   @override
@@ -47,14 +56,26 @@ class _InsertExpensePageState extends State<InsertExpensePage> {
       body: buidBody(context),
       bottomNavigationBar: ButtonNavigationWidget(
         onPressedPrimary: () async {
-          await widget.controller.saveExpense(ExpenseModel(
-            name: nameController.text,
-            value: double.parse(valueController.text),
-            dueDate: dueDateController.text,
-            category: categoryController.text,
-            paid: paid,
-          ));
-          Modular.to.pop(true);
+          if (widget.expense == null) {
+            await widget.controller.saveExpense(ExpenseModel(
+              name: nameController.text,
+              value: double.parse(valueController.text),
+              dueDate: dueDateController.text,
+              category: categoryController.text,
+              paid: paid,
+            ));
+            Modular.to.pop(true);
+          } else {
+            await widget.controller.editExpense(ExpenseModel(
+              id: widget.expense!.id,
+              name: nameController.text,
+              value: double.parse(valueController.text),
+              dueDate: dueDateController.text,
+              category: categoryController.text,
+              paid: paid,
+            ));
+            Modular.to.pop(true);
+          }
         },
         onPressedSecond: () {
           Modular.to.pop(false);

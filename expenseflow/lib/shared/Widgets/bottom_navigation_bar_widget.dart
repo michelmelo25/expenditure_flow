@@ -29,7 +29,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
               child: IconButton(
                 tooltip: AppStrings.addNovaDespesa,
                 onPressed: () async {
-                  final add = await Modular.to.pushNamed("/add");
+                  final add =
+                      await Modular.to.pushNamed("/add", arguments: null);
                   if (add == true) {
                     await controller.initApp();
                   }

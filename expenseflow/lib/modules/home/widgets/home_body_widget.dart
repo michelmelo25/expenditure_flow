@@ -72,6 +72,13 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
                         onLongPress: () {
                           _showRemoveTaskDialog(expenses[index]);
                         },
+                        onTap: () async {
+                          final add = await Modular.to
+                              .pushNamed("/add", arguments: expenses[index]);
+                          if (add == true) {
+                            await widget.controller.initApp();
+                          }
+                        },
                       ),
                     )
                   ],
