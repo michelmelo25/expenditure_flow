@@ -5,6 +5,7 @@ import 'package:expenseflow/shared/Models/expense_model.dart';
 import 'package:expenseflow/shared/Widgets/not_found_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class HomeBodyWidget extends StatefulWidget {
   final HomeController controller;
@@ -68,6 +69,9 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
                                 .updateExpense(expenses[index]);
                           },
                         ),
+                        onLongPress: () {
+                          _showRemoveTaskDialog(expenses[index]);
+                        },
                       ),
                     )
                   ],
@@ -75,4 +79,32 @@ class _HomeBodyWidgetState extends State<HomeBodyWidget> {
               }),
         );
       });
+
+  _showRemoveTaskDialog(ExpenseModel expense) {
+    Widget cancelButton = TextButton(
+        onPressed: () {
+          Modular.to.pop();
+        },
+        child: const Text("Cancelar"));
+    Widget okButton = TextButton(
+        onPressed: () async {
+          await widget.controller.dellExpense(expense.id!);
+          Modular.to.pop();
+        },
+        child: const Text("Confirmar"));
+
+    AlertDialog dialog = AlertDialog(
+      title: Text('Remover "${expense.name}"?'),
+      content: const Text("Deseja mesmo remover esta despesa?"),
+      actions: [
+        cancelButton,
+        okButton,
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (context) {
+          return dialog;
+        });
+  }
 }
